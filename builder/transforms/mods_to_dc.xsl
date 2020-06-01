@@ -2,6 +2,9 @@
 <xsl:stylesheet version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mods="http://www.loc.gov/mods/v3" exclude-result-prefixes="mods" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:srw_dc="info:srw/schema/1/dc-schema" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 	<!-- 
+    Version 1.8.1	2019-06-25 tguignard@ocls.ca
+					OCLS local change to fix et al issue in dc.creator
+
     Version 1.8		2015-03-05 tmee@loc.gov
     				Typo mods:provence changed to mods:province
     
@@ -108,14 +111,7 @@
 			<xsl:when test="mods:role/mods:roleTerm[@type='text']='creator' or mods:role/mods:roleTerm[@type='code']='cre' ">
 				<dc:creator>
 					<xsl:call-template name="name"/>
-					<xsl:choose>
-						<xsl:when test="mods:etal">
-							<xsl:value-of select="."/>
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:text>et al</xsl:text>
-						</xsl:otherwise>
-					</xsl:choose>
+						<xsl:if test="mods:etal">et al.</xsl:if>
 				</dc:creator>
 			</xsl:when>
 			<xsl:otherwise>
